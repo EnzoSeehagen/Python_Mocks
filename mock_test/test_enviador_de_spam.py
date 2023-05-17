@@ -20,3 +20,12 @@ def test_envio_de_spam():
     assert list(enviador.enviar_spam("Spam enviado")) == [
         ("enzo@gmail.com", "Spam enviado para Enzo")
     ]
+
+def test_canal_foi_executado():
+    enviador = EnviadorDeSpam(["enzo@gmail.com"])
+    canal = CanalMock
+    enviador.canais_de_envio = [canal]
+    list(enviador.enviar_spam("Spam enviado"))
+
+    assert canal.enviar_foi_chamado
+    assert canal.enviar_argumento == ["enzo@gmail.com', "Spam enviado"]

@@ -7,7 +7,12 @@ class CanalEmail:
 
 
 class CanalMock:
+
+    def __init__(self):
+        self.enviar_foi_chamado = False
+
     def enviar(self, destinatario, mensagem):
+        self.enviar_foi_chamado = True
         return "enzo@gmail.com", "Spam enviado para Enzo"
 
 
