@@ -27,7 +27,7 @@ def test_envio_de_spam():
 
 def test_canal_foi_executado():
     enviador = EnviadorDeSpam(["enzo@gmail.com"])
-    canal = Mock()
+    canal = Mock(spec=CanalEmail)
     enviador.canais_de_envio = [canal]
     list(enviador.enviar_spam("Spam enviado"))
 
