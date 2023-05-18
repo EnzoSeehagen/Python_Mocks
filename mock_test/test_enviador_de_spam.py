@@ -1,4 +1,6 @@
-from mock_test.enviador_de_spam import EnviadorDeSpam, CanalEmail, CanalMock
+from unittest.mock import Mock
+
+from mock_test.enviador_de_spam import EnviadorDeSpam, CanalEmail
 
 
 def test_enviador_de_span():
@@ -15,7 +17,9 @@ def test_enviador_possui_destinatarios():
 
 def test_envio_de_spam():
     enviador = EnviadorDeSpam(["enzo@gmail.com"])
-    enviador.canais_de_envio=[CanalMock()]
+    canal = Mock()
+    canal.enviar.return_value=("enzo@gmail.com", "Spam enviado para Enzo")
+    enviador.canais_de_envio=[canal]
 
     assert list(enviador.enviar_spam("Spam enviado")) == [
         ("enzo@gmail.com", "Spam enviado para Enzo")
@@ -23,9 +27,8 @@ def test_envio_de_spam():
 
 def test_canal_foi_executado():
     enviador = EnviadorDeSpam(["enzo@gmail.com"])
-    canal = CanalMock
+    canal = Mock()
     enviador.canais_de_envio = [canal]
     list(enviador.enviar_spam("Spam enviado"))
 
-    assert canal.enviar_foi_chamado
-    assert canal.enviar_argumento == ["enzo@gmail.com', "Spam enviado"]
+    canal.enviar.assert_called_once_with("enzo@gmail.com", "Spam enviado")

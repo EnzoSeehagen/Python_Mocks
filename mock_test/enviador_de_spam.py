@@ -6,16 +6,6 @@ class CanalEmail:
         return destinatario, mensagem_final
 
 
-class CanalMock:
-
-    def __init__(self):
-        self.enviar_foi_chamado = False
-
-    def enviar(self, destinatario, mensagem):
-        self.enviar_foi_chamado = True
-        return "enzo@gmail.com", "Spam enviado para Enzo"
-
-
 class EnviadorDeSpam:
     def __init__(self, destinatarios=None):
         self.destinatarios = destinatarios if destinatarios else []
